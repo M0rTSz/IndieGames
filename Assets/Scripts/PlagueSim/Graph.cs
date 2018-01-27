@@ -294,6 +294,3 @@ public class Graph : MonoBehaviour {
 
 
 }
-
-//TODO: Move somewhere else
-public enum Modules { Base, Farming }

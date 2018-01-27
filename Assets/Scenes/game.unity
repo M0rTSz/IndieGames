@@ -373,8 +373,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modules:
-  - {fileID: 1939776397904298, guid: 2405f82a05bf20f4c8421c4da4e96c88, type: 2}
+  - {fileID: 1616005347163160, guid: 06b96c236d3658d4e8eef2599b6afec6, type: 2}
   - {fileID: 1816086788350314, guid: 6863b18dc197fd1428a059d1f9ae946e, type: 2}
+  - {fileID: 1816086788350314, guid: d05318f5f3618534d872568a981e049a, type: 2}
   canvas: {fileID: 226688131}
 --- !u!1001 &720652451
 Prefab:

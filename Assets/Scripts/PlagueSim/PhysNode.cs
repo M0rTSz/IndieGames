@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PhysNode : MonoBehaviour
+public abstract class PhysNode : MonoBehaviour
 {
     private readonly float infectedBarYOffset = 0.2f;
     private readonly float startingWaitingTime = 1.0f;
 
-    public int id;
+    public bool inhabitable;
+
+    public int energyCreatingCost = 5; //Some arbitrary cost value
+
+    private float elapsedTime = 0;
+
+    public int id = -1;
 
     public int[] shortestPath = { };
 
@@ -43,7 +49,9 @@ public class PhysNode : MonoBehaviour
 
     /// <summary>
     /// Updates InfectedBar when setting value
+    /// Ill people are always Inhabs, so Ill <= Inhab
     /// </summary>
+    /// 
     public int Ill
     {
         get
@@ -57,27 +65,6 @@ public class PhysNode : MonoBehaviour
         }
     }
 
-    //public PhysNode()
-    //{
-    //    this.id = -1;
-    //    this.inhab = 0;
-    //    this.ill = 0;
-    //}
-
-    //public PhysNode(int id, int inhab)
-    //{
-    //    this.id = id;
-    //    this.inhab = inhab;
-    //    this.ill = 0;
-    //}
-
-    //public PhysNode(int id, int inhab, int ill)
-    //{
-    //    this.id = id;
-    //    this.inhab = inhab;
-    //    this.ill = ill;
-    //}
-
     protected void Start()
     {
         canvas = GameObject.FindWithTag("PhysicalCanvas");
@@ -86,10 +73,17 @@ public class PhysNode : MonoBehaviour
         infectedBarObject.transform.position = gameObject.transform.position + new Vector3(0, infectedBarYOffset, 0);
         infectedBarObject.transform.rotation = infectedBarObject.transform.parent.rotation;
         infectedBarObject.GetComponent<InfectedBar>().Fade(false, startingWaitingTime);
+    }
 
-
-        //Debug.Log("Extend new Node:");
-        //extendShortestPathArr(FindObjectOfType<Graph>().physNodeList.Count);
+    protected void Update()
+    {
+        elapsedTime += Time.deltaTime;
+        if(elapsedTime > GameData.gameInterval)
+        {
+            DoSim();
+            Debug.Log("Current Food: " + GameData.Food + "\nCurrent Energy: " + GameData.Energy);
+            elapsedTime = 0.0f;
+        }
     }
 
     /// <summary>
@@ -117,6 +111,7 @@ public class PhysNode : MonoBehaviour
 
     private void setIll(int ill)
     {
+        ill = Mathf.Max(ill, Inhab);
         this.ill = ill;
         UpdateInfectedBarValue();
     }
@@ -127,35 +122,22 @@ public class PhysNode : MonoBehaviour
         UpdateInfectedBarValue();
     }
 
-    public void addIll(int ill)
-    {
-        this.Ill += ill;
-        UpdateInfectedBarValue();
-    }
+    //public void addIll(int ill)
+    //{
+    //    this.Ill += ill;
+    //    UpdateInfectedBarValue();
+    //}
 
-    public void addInhab(int inhab)
-    {
-        this.Inhab += inhab;
-        UpdateInfectedBarValue();
-    }
+    //public void addInhab(int inhab)
+    //{
+    //    this.Inhab += inhab;
+    //    UpdateInfectedBarValue();
+    //}
 
     public void UpdateInfectedBarValue()
     {
         infectedBarObject.GetComponent<InfectedBar>().setValue(Inhab > 0.0f ? ((float)Ill / (float)Inhab) : 1.0f);
     }
-
-    //public void extendShortestPathArr(int amount)
-    //{
-    //    int[] newArr = new int[shortestPath.Length + amount];
-        
-    //    for(int i = 0; i < newArr.Length; i++)
-    //    {
-    //        newArr[i] = -1;
-    //    }
-
-    //    shortestPath = newArr;
-    //    Debug.Log(shortestPath.Length);
-    //}
 
     public void setShortestPathArrLength(int amount)
     {
@@ -187,5 +169,5 @@ public class PhysNode : MonoBehaviour
         infectedBarObject.GetComponent<InfectedBar>().Fade(false);
     }
 
-
+    protected abstract void DoSim();
 }

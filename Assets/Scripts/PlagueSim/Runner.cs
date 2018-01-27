@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Runner
 {
-
-    public int simInterval = 3;
     private float elapsedTime = 0;
     public Graph g;
     public int[][] watch;
@@ -22,7 +20,7 @@ public class Runner
     public void Running() //Old Update
     {
         elapsedTime += Time.deltaTime;
-        if (elapsedTime > simInterval)
+        if (elapsedTime > GameData.gameInterval)
         {
             doSim();
             elapsedTime = 0;
