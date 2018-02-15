@@ -8,6 +8,9 @@ public abstract class PhysNode : MonoBehaviour
     private readonly float infectedBarYOffset = 0.2f;
     private readonly float startingWaitingTime = 1.0f;
 
+    public readonly int maxInhab = 15; //Readonly for now
+
+    [HideInInspector]
     public bool inhabitable;
 
     public int energyCreatingCost = 5; //Some arbitrary cost value
@@ -27,6 +30,8 @@ public abstract class PhysNode : MonoBehaviour
     GameObject infectedBarObject;
 
     private GameObject canvas;
+
+    protected Graph graph;
 
     [SerializeField]
     protected int inhab, ill;
@@ -73,6 +78,8 @@ public abstract class PhysNode : MonoBehaviour
         infectedBarObject.transform.position = gameObject.transform.position + new Vector3(0, infectedBarYOffset, 0);
         infectedBarObject.transform.rotation = infectedBarObject.transform.parent.rotation;
         infectedBarObject.GetComponent<InfectedBar>().Fade(false, startingWaitingTime);
+
+        graph = FindObjectOfType<Graph>();
     }
 
     protected void Update()
@@ -81,7 +88,7 @@ public abstract class PhysNode : MonoBehaviour
         if(elapsedTime > GameData.gameInterval)
         {
             DoSim();
-            Debug.Log("Current Food: " + GameData.Food + "\nCurrent Energy: " + GameData.Energy);
+            //Debug.Log("Current Food: " + GameData.Food + "\nCurrent Energy: " + GameData.Energy);
             elapsedTime = 0.0f;
         }
     }
@@ -111,14 +118,14 @@ public abstract class PhysNode : MonoBehaviour
 
     private void setIll(int ill)
     {
-        ill = Mathf.Max(ill, Inhab);
+        ill = Mathf.Min(ill, Inhab);
         this.ill = ill;
         UpdateInfectedBarValue();
     }
 
     private void setInhab(int inhab)
     {
-        this.inhab = inhab;
+        this.inhab = Mathf.Min(inhab, maxInhab);
         UpdateInfectedBarValue();
     }
 

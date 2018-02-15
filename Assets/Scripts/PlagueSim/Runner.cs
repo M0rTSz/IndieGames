@@ -124,7 +124,8 @@ public class Runner
             if (rnd < (g.physNodeList[from].Ill * perc)) //Changed to Range(float, float);
             {
                 //g.physNodeList[cur].Ill++;
-                int newInfected = Mathf.Clamp(Mathf.RoundToInt(g.peopleFlow[from, cur] * rnd), 0, g.physNodeList[from].Inhab);
+                //int newInfected = Mathf.Clamp(Mathf.RoundToInt(g.peopleFlow[from, cur] * rnd), 0, g.physNodeList[from].Inhab);
+                int newInfected = Mathf.Clamp(Mathf.RoundToInt(g.peopleFlow[from, cur] * rnd), 0, g.physNodeList[cur].Inhab - g.physNodeList[cur].Ill);
                 g.physNodeList[cur].Ill += newInfected;
             }
         }
@@ -136,7 +137,7 @@ public class Runner
         text += id + "\n";
         text += "Inhab: " + g.physNodeList[id].Inhab + "\n";
         text += "Ill: " + g.physNodeList[id].Ill + "\n";
-        Debug.Log(text);
+        //Debug.Log(text);
         //textObject[id].text = text;
     }
 }

@@ -52,4 +52,4 @@ public class GameData : MonoBehaviour {
     }
 }
 
-public enum Modules { Base, Farming, EnergyGenerator }
+public enum Modules { Base, Farming, EnergyGenerator, Habitation }

@@ -20,6 +20,7 @@ public class Base : PhysNode
         }
 
         inhabitable = true;
+        graph.refreshPeopleFlow(this);
     }
 
     //Before adding Start and Update, check if they would override Methods in PhysNode

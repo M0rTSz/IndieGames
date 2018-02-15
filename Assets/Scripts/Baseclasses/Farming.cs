@@ -16,7 +16,8 @@ public class Farming : PhysNode {
         inhabitable = false;
         productionRate = 2.0f;
         
-        Inhab = (int)(Random.Range(0.0f, 1.0f) * 15);
+        Inhab = 0;
+        graph.refreshPeopleFlow(this);
     }
 
     protected override void DoSim()

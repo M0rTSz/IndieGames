@@ -62,27 +62,6 @@ public class Connector : MonoBehaviour {
     {
         GameObject newModule;
 
-        //Insert Node
-        //switch (moduleType)
-        //{
-        //    case Modules.Base:
-        //        newModule = Instantiate(pm.modules[(int)Modules.Base], transform.parent.position + direction, Quaternion.identity);
-        //        break;
-
-        //    case Modules.Farming:
-        //        newModule = Instantiate(pm.modules[(int)Modules.Farming], transform.parent.position + direction, Quaternion.identity);
-        //        break;
-
-        //    case Modules.EnergyGenerator:
-        //        newModule = Instantiate(pm.modules[(int)Modules.EnergyGenerator], transform.parent.position + direction, Quaternion.identity);
-        //        break;
-
-        //    default:
-        //        newModule = null;
-        //        break;
-
-        //}
-
         newModule = Instantiate(pm.modules[(int)moduleType], transform.parent.position + direction, Quaternion.identity);
 
         PhysNode newPhysNode = newModule.GetComponent<PhysNode>();
