@@ -62,33 +62,27 @@ public class Connector : MonoBehaviour {
     {
         GameObject newModule;
 
-        //Insert Node
-        switch (moduleType)
+        newModule = Instantiate(pm.modules[(int)moduleType], transform.parent.position + direction, Quaternion.identity);
+
+        PhysNode newPhysNode = newModule.GetComponent<PhysNode>();
+        if(newPhysNode.energyCreatingCost > GameData.Energy)
         {
-            case Modules.Base:
-                newModule = Instantiate(pm.modules[(int)Modules.Base], transform.parent.position + direction, Quaternion.identity);
-                break;
-
-            case Modules.Farming:
-                newModule = Instantiate(pm.modules[(int)Modules.Farming], transform.parent.position + direction, Quaternion.identity);
-                break;
-
-            default:
-                newModule = null;
-                break;
-
+            //Not enough Energy; somehow tell the Player via UI
+            Debug.Log("Not enough Energy to create the Module");
+            return;
+        } else
+        {
+            GameData.Energy -= newPhysNode.energyCreatingCost;
         }
-               
+
         //Insert Graph Node
         int newID = graph.GetNewId();
-        PhysNode newPhysNode = newModule.GetComponent<PhysNode>();
         int myID = this.transform.parent.GetComponent<PhysNode>().id;
 
         newPhysNode.setupNode(newID, 0, 0);
 
         graph.AddNode(newPhysNode);
-
-
+        
         //Set the Connection between the 2 involved Connectors
         //TODO: Set Connections to other adjacent Modules (maybe via graph?)
 

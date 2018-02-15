@@ -102,9 +102,9 @@ GameObject:
   - component: {fileID: 33071547548110838}
   - component: {fileID: 65234635454861748}
   - component: {fileID: 23671806729877282}
-  - component: {fileID: 114877848558865836}
+  - component: {fileID: 114449517175283482}
   m_Layer: 0
-  m_Name: Farming
+  m_Name: Habitation
   m_TagString: Module
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -431,7 +431,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 885d421a134df04439b980009f2b9738, type: 2}
+  - {fileID: 2100000, guid: 7116e0423ddb1054fa6dbe4275a4ed20, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -764,6 +764,27 @@ MonoBehaviour:
   AddModulePanel: {fileID: 1801382539998948, guid: 52299403933760d47a92a727e262b75e,
     type: 2}
   neighbor: {fileID: 0}
+--- !u!114 &114449517175283482
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1816086788350314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a6f360b5dd57247aac1f452baf0e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inhabitable: 0
+  energyCreatingCost: 10
+  id: -1
+  shortestPath: 
+  level: 0
+  connections: []
+  infectedBarObject: {fileID: 1194574285502834, guid: eacd99c8673a55a4d9ce5623d3b441ae,
+    type: 2}
+  inhab: 0
+  ill: 0
 --- !u!114 &114623563856959608
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -778,33 +799,6 @@ MonoBehaviour:
   AddModulePanel: {fileID: 1801382539998948, guid: 52299403933760d47a92a727e262b75e,
     type: 2}
   neighbor: {fileID: 0}
---- !u!114 &114877848558865836
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1816086788350314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87c754ab0ff163946976ec104bffe4b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inhabitable: 0
-  energyCreatingCost: 10
-  id: -1
-  shortestPath: ffffffffffffffffffffffffffffffffffffffff
-  level: 0
-  connections:
-  - {fileID: 114011049208110912}
-  - {fileID: 114281162466607680}
-  - {fileID: 114956168827162404}
-  - {fileID: 114623563856959608}
-  - {fileID: 114447936827646472}
-  - {fileID: 114109096964457148}
-  infectedBarObject: {fileID: 1194574285502834, guid: eacd99c8673a55a4d9ce5623d3b441ae,
-    type: 2}
-  inhab: 0
-  ill: 0
 --- !u!114 &114956168827162404
 MonoBehaviour:
   m_ObjectHideFlags: 1

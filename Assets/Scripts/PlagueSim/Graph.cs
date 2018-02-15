@@ -34,10 +34,15 @@ public class Graph : MonoBehaviour {
     //Starting maxID: 0 (Base)
     private int currentMaxGraphId = 0; //TODO: Move to Public Variables
 
+    private int firstNodeUnemployed = 0;
+
     bool running = false;
 
     //public PhysNode[] physNodeList = {  };
     public List<PhysNode> physNodeList = new List<PhysNode>();
+
+    private List<int> workList = new List<int>();
+    private List<int> habList = new List<int>();
 
     public int[,] connectionMatrix = {
         {0} };
@@ -79,6 +84,58 @@ public class Graph : MonoBehaviour {
         physNodeList.Add(newNode);
         setAllShortestPathArrayLength(physNodeList.Count);
         
+    }
+
+
+    public void refreshPeopleFlow(PhysNode newNode)
+    {
+        //Insert new Node
+        if (newNode.inhabitable)
+        {
+            if(habList.Count == 0)
+            {
+                firstNodeUnemployed = newNode.Inhab;
+            }
+            habList.Add(newNode.id);
+        } else
+        {
+            workList.Add(newNode.id);
+        }
+
+        //Refresh Inhabs + People Flow
+        while(habList.Count > 0 && workList.Count > 0)
+        {
+            PhysNode habNode = physNodeList[habList[0]];
+            PhysNode workNode = physNodeList[workList[0]];
+
+            int peopleFlow = 0;
+            
+            if((workNode.maxInhab - workNode.Inhab) < firstNodeUnemployed) //work Node is Full
+            {
+                peopleFlow = workNode.maxInhab - workNode.Inhab;
+                firstNodeUnemployed -= peopleFlow;
+                workNode.Inhab = workNode.maxInhab;
+                workList.RemoveAt(0);
+            } else if(firstNodeUnemployed < (workNode.maxInhab - workNode.Inhab)) //hab Node is Full
+            {
+                peopleFlow = firstNodeUnemployed;
+                workNode.Inhab += peopleFlow;
+                habList.RemoveAt(0);
+                if(habList.Count > 0)
+                    firstNodeUnemployed = physNodeList[habList[0]].Inhab;
+            } else //both full
+            {
+                peopleFlow = firstNodeUnemployed;
+                workNode.Inhab = workNode.maxInhab;
+                habList.RemoveAt(0);
+                workList.RemoveAt(0);
+                if (habList.Count > 0)
+                    firstNodeUnemployed = physNodeList[habList[0]].Inhab;
+            }
+
+            this.peopleFlow[habNode.id, workNode.id] = peopleFlow;
+            this.peopleFlow[workNode.id, habNode.id] = peopleFlow;
+        }
     }
 
     public void setAllShortestPathArrayLength(int amount)
@@ -263,7 +320,7 @@ public class Graph : MonoBehaviour {
             matrixString += "\n" + output;
         }
 
-        Debug.Log(matrixString);
+        //Debug.Log(matrixString);
     }
 
 
@@ -294,6 +351,3 @@ public class Graph : MonoBehaviour {
 
 
 }
-
-//TODO: Move somewhere else
-public enum Modules { Base, Farming }
