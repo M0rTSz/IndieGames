@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameData : MonoBehaviour {
 
@@ -15,6 +16,9 @@ public class GameData : MonoBehaviour {
 
     public static float gameInterval = 3.0f;
 
+    public static Text foodText;
+    public static Text energyText;
+    
     public static int Food
     {
         get
@@ -30,6 +34,7 @@ public class GameData : MonoBehaviour {
                 Debug.Log("No food left."); //Do something
                 food = 0;
             }
+            foodText.text = "Food: " + food;
         }
     }
 
@@ -48,6 +53,7 @@ public class GameData : MonoBehaviour {
                 Debug.Log("No energy left."); //Do something
                 energy = 0;
             }
+            energyText.text = "Energy: " + energy;
         }
     }
 }

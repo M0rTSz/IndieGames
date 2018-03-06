@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PanelManager : MonoBehaviour
 {
 
     [SerializeField]
     public GameObject[] modules; //TODO: Move to Public Variables
+
+    public Text foodText;
+    public Text energyText;
 
     [SerializeField]
     GameObject canvas;
@@ -20,6 +24,10 @@ public class PanelManager : MonoBehaviour
     private void Start()
     {
         c = Camera.main;
+        GameData.foodText = foodText;
+        GameData.energyText = energyText;
+        GameData.foodText.text = "Food: " + GameData.Food;
+        GameData.energyText.text = "Energy: " + GameData.Energy;
     }
     // Update is called once per frame
     void Update () {
