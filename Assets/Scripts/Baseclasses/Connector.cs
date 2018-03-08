@@ -62,7 +62,9 @@ public class Connector : MonoBehaviour {
     {
         GameObject newModule;
 
-        newModule = Instantiate(pm.modules[(int)moduleType], transform.parent.position + direction, Quaternion.identity);
+        newModule = Instantiate(pm.modules[(int)moduleType]); //, transform.parent.position + direction, Quaternion.identity
+        //newModule.transform.position = transform.parent.position + direction;
+        newModule.transform.position = transform.parent.position + direction * (transform.position - transform.parent.position).magnitude * 2;
 
         PhysNode newPhysNode = newModule.GetComponent<PhysNode>();
         if(newPhysNode.energyCreatingCost > GameData.Energy)

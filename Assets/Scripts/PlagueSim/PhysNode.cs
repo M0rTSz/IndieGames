@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public abstract class PhysNode : MonoBehaviour
 {
-    private readonly float infectedBarYOffset = 0.2f;
+    private readonly float infectedBarYOffset = -0.05f;
     private readonly float startingWaitingTime = 1.0f;
 
     public readonly int maxInhab = 15; //Readonly for now
